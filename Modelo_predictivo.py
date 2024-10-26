@@ -8,6 +8,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
 from tabulate import tabulate
+import mplcursors  # Para hacer gráficos interactivos
 
 # Configuración de estilo para gráficos
 sns.set(style="whitegrid")
@@ -18,7 +19,8 @@ df = pd.read_sql('SELECT * FROM empleos', engine)
 
 # 2. Preparar los datos
 # Convertir columnas relevantes a tipo 'category' y codificar
-categorical_columns = ['experience_level', 'employment_type', 'job_title', 'employee_residence', 'company_location', 'company_size']
+categorical_columns = ['experience_level', 'employment_type', 'job_title', 
+                       'employee_residence', 'company_location', 'company_size']
 for col in categorical_columns:
     df[col] = df[col].astype('category').cat.codes
 
@@ -45,7 +47,6 @@ mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
 
 # 7. Predicción para 2025 y 2026
-# Valores promedio para predicción futura, simulando incrementos razonables
 mean_values = np.mean(X_scaled, axis=0)
 future_data_2025 = mean_values + 0.02  # Incremento para 2025
 future_data_2026 = mean_values + 0.04  # Incremento para 2026
@@ -62,7 +63,7 @@ plt.figure(figsize=(16, 8))
 
 # Gráfico de los salarios reales vs. predicciones
 plt.subplot(1, 2, 1)
-plt.scatter(y_test, y_pred, color='dodgerblue', alpha=0.6, label='Salarios Predichos')
+scatter = plt.scatter(y_test, y_pred, color='dodgerblue', alpha=0.6, label='Salarios Predichos')
 plt.plot([y.min(), y.max()], [y.min(), y.max()], color='darkred', linestyle='--', lw=2, label='Línea de referencia')
 plt.title('Salarios Reales vs. Predicciones (Random Forest)', fontsize=15)
 plt.xlabel('Salario Real (USD)', fontsize=12)
@@ -70,15 +71,23 @@ plt.ylabel('Salario Predicho (USD)', fontsize=12)
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend()
 
+# Hacer el gráfico interactivo
+mplcursors.cursor(scatter, hover=True).connect("add", lambda sel: sel.annotation.set_text(f'Salario: ${y_pred[sel.index]:,.2f}'))
+
 # Gráfico de barras para predicciones futuras
 plt.subplot(1, 2, 2)
 years = ['2025', '2026']
-plt.bar(years, future_salaries, color=['cornflowerblue', 'lightseagreen'], alpha=0.8)
+bar = plt.bar(years, future_salaries, color=['cornflowerblue', 'lightseagreen'], alpha=0.8)
 plt.title('Predicción de Salarios para 2025 y 2026', fontsize=15)
 plt.xlabel('Año', fontsize=12)
 plt.ylabel('Salario Predicho en USD', fontsize=12)
 plt.ylim(0, future_salaries.max() * 1.1)
 plt.grid(True, linestyle='--', alpha=0.7)
+
+# Añadir etiquetas a las barras
+for b in bar:
+    yval = b.get_height()
+    plt.text(b.get_x() + b.get_width()/2, yval + 1000, f'${yval:,.2f}', ha='center', va='bottom', fontsize=10)
 
 plt.tight_layout()
 plt.show()
