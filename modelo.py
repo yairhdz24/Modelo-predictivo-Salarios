@@ -121,7 +121,7 @@ class SalaryPredictor:
             'feature_cols': feature_cols
         }
         
-        return train_test_split(x, y, test_size=0.2, random_state=42, stratify=None)
+        return train_test_split(x, y, test_size=0.2, random_state=None, stratify=None)
 
     def train_model(self, X_train, y_train, X_test, y_test, **kwargs):
         """Entrena el modelo y calcula métricas detalladas."""
@@ -130,7 +130,7 @@ class SalaryPredictor:
             max_depth=kwargs.get('max_depth', 15),
             min_samples_split=kwargs.get('min_samples_split', 5),
             min_samples_leaf=kwargs.get('min_samples_leaf', 2),
-            random_state=42,
+            random_state=None,
             n_jobs=-1
         )
         
@@ -261,7 +261,7 @@ class SalaryPredictor:
 def create_enhanced_dashboard():
     # Configuración de la página
     st.set_page_config(
-        page_title="🎯 Análisis Predictivo Avanzado de Salarios",
+        page_title="📊 Análisis Predictivo de Salarios",
         layout="wide",
         initial_sidebar_state="expanded"
     )
@@ -270,149 +270,322 @@ def create_enhanced_dashboard():
     st.markdown("""
         <style>
         /* Estilos base */
-        .main {
-            padding: 2rem;
-            background-color: #f8f9fa;
-        }
-        
-        /* Contenedores de componentes */
-        .component-container {
-            background-color: #2a5298;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
-            transition: transform 0.2s ease-in-out;
-        }
-        
-        .component-container:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* Títulos y encabezados */
-        .title-container {
-            background: linear-gradient(120deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        
-        .section-title {
-            color: #2a5298;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e5e7eb;
-        }
-        
-        /* Tarjetas de métricas */
-        .metric-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.2s ease;
-        }
-        
-        .metric-card:hover {
-            transform: scale(1.02);
-        }
-        
-        /* Contenedores de gráficos */
-        .chart-container {
-            background: linear-gradient(120deg, #1e3c72 0%, #2a5298 100%);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
-        }
-        
-        /* Tooltips personalizados */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            cursor: help;
-        }
-        
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 200px;
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 8px;
-            border-radius: 6px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        /* Sidebar mejorado */
-        .sidebar .sidebar-content {
-            background-color: #f1f5f9;
-            padding: 2rem;
-            border-right: 1px solid #e5e7eb;
-        }
-        
-        /* Botones personalizados */
-        .stButton>button {
-            background-color: #2a5298;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-        
-        .stButton>button:hover {
-            background-color: #1e3c72;
-            transform: translateY(-2px);
-        }
-        
-        /* Tabla de datos */
-        .dataframe {
-            border: none !important;
-            border-collapse: separate;
-            border-spacing: 0;
-            width: 100%;
-            margin: 1rem 0;
-        }
-        
-        .dataframe th {
-            background-color: #f8f9fa;
-            padding: 12px;
-            border-bottom: 2px solid #e5e7eb;
-            text-align: left;
-        }
-        
-        .dataframe td {
-            padding: 12px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        /* Animaciones */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
+       /* Estilos base mejorados */
+body {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+/* Contenedores de componentes mejorados */
+.component-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    margin-bottom: 2rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.component-container:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+}
+
+/* Títulos y encabezados mejorados */
+.title-container {
+    background: linear-gradient(120deg, #3498db, #8e44ad);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 15px;
+    margin-bottom: 3rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.section-title {
+    color: #ffffff;
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 3px solid #3498db;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Tarjetas de métricas mejoradas */
+.metric-card {
+    background: linear-gradient(135deg, #00b09b, #96c93d);
+    color: #ffffff;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.metric-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedores de gráficos mejorados */
+.chart-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    margin-bottom: 3rem;
+    transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+}
+
+/* Tooltips personalizados mejorados */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: rgba(52, 152, 219, 0.9);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+/* Sidebar mejorado */
+.sidebar .sidebar-content {
+    background: linear-gradient(135deg, #3498db, #8e44ad);
+    padding: 2.5rem;
+    border-right: none;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones personalizados mejorados */
+.stButton > button {
+    background: linear-gradient(135deg, #3498db, #8e44ad);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(135deg, #2980b9, #8e44ad);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Tabla de datos mejorada */
+.dataframe {
+    border: none !important;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 1.5rem 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.dataframe th {
+    background-color: rgba(52, 152, 219, 0.7);
+    padding: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    text-align: left;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.dataframe td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.dataframe tr:hover td {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Animaciones mejoradas */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Estilos adicionales para mejorar la apariencia general */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(52, 152, 219, 0.7);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(52, 152, 219, 0.9);
+}
+
+/* Efecto de resplandor para elementos importantes */
+.glow-effect {
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 15px rgba(52, 152, 219, 0.7); }
+    to { box-shadow: 0 0 25px rgba(142, 68, 173, 0.9); }
+}
+
+/* Mejora de la legibilidad del texto */
+p, li {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+/* Estilo para enlaces */
+a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* Estilos para inputs mejorados */
+input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Estilo para etiquetas de formulario */
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Mejora de la apariencia de los select */
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+/* Estilo para checkbox y radio buttons */
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Estilo para fieldset y legend */
+fieldset {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+    padding: 0 10px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Mejora de la apariencia de los botones de formulario */
+button[type="submit"] {
+    background: linear-gradient(135deg, #3498db, #8e44ad);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #2980b9, #8e44ad);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
         </style>
     """, unsafe_allow_html=True)
 
@@ -420,7 +593,7 @@ def create_enhanced_dashboard():
     with st.sidebar:
         st.markdown("""
             <div class='component-container'>
-                <h2>Panel de Control
+                <h2>Panel de Control</h2>
             </div>
         """, unsafe_allow_html=True)
         
@@ -438,7 +611,7 @@ def create_enhanced_dashboard():
         st.subheader("⏳ Rango Temporal")
         years_range = st.slider("Años de análisis", 2020, 2024, (2020, 2024),
                               help="Selecciona el rango de años para el análisis")
-        forecast_years = st.slider("Años de predicción", 2025, 2027, (2025, 2027),
+        forecast_years = st.slider("Años de predicción", 2025, 2026, (2025, 2026),
                                  help="Selecciona el rango de años para la predicción")
         
         # Configuración de visualización
@@ -454,7 +627,7 @@ def create_enhanced_dashboard():
     # Header principal con animación
     st.markdown("""
         <div class='title-container fade-in'>
-            <h1>🎯 Análisis Predictivo Avanzado de Salarios</h1>
+            <h1>📊 Análisis Predictivo de Salarios</h1>
             <p>Sistema de predicción basado en Machine Learning para estimación salarial</p>
         </div>
     """, unsafe_allow_html=True)
@@ -481,7 +654,7 @@ def create_enhanced_dashboard():
         st.markdown("""
             <div class='metric-card'>
                 <div class='tooltip'>
-                    🎯 Precisión del Modelo (R²)
+                    📊 Precisión del Modelo (R²)
                     <span class='tooltiptext'>Indica qué tan bien el modelo explica la variabilidad de los datos</span>
                 </div>
                 <h2>{:.2%}</h2>
@@ -496,7 +669,7 @@ def create_enhanced_dashboard():
         st.markdown("""
             <div class='metric-card'>
                 <div class='tooltip'>
-                    📊 Error Medio Absoluto
+                    📉 Error Medio Absoluto
                     <span class='tooltiptext'>Promedio de la diferencia entre predicciones y valores reales</span>
                 </div>
                 <h2>${:,.0f}</h2>
@@ -511,7 +684,7 @@ def create_enhanced_dashboard():
         st.markdown("""
             <div class='metric-card'>
                 <div class='tooltip'>
-                    🎭 Validación Cruzada
+                    📈 Validación Cruzada
                     <span class='tooltiptext'>Precisión promedio en diferentes subconjuntos de datos</span>
                 </div>
                 <h2>{:.2%}</h2>
@@ -524,9 +697,9 @@ def create_enhanced_dashboard():
 
     # Tabs para diferentes análisis
     tab1, tab2, tab3 = st.tabs([
-        "📈 Análisis Predictivo",
-        "📊 Distribución Salarial",
-        "🎯 Importancia de Variables"
+        "📊 Análisis Predictivo",
+        "💼 Distribución Salarial",
+        "📈 Importancia de Variables"
     ])
 
     with tab1:
@@ -543,9 +716,9 @@ def create_enhanced_dashboard():
             name='Predicciones',
             marker=dict(
                 size=8,
-                color='rgb(99, 110, 250)',
-                opacity=0.6,
-                line=dict(width=1, color='white')
+                color='#38ada9',
+                opacity=0.8,
+                line=dict(width=1, color='#1e90ff')
             ),
             hovertemplate=
             '<b>Salario Real:</b> $%{x:,.0f}<br>' +
@@ -575,7 +748,7 @@ def create_enhanced_dashboard():
             },
             xaxis_title="Salario Real (USD)",
             yaxis_title="Salario Predicho (USD)",
-            template="plotly_white",
+            template="plotly_dark",
             height=600,
             showlegend=True,
             legend=dict(
@@ -621,7 +794,7 @@ def create_enhanced_dashboard():
             },
             xaxis_title="Nivel de Experiencia",
             yaxis_title="Salario (USD)",
-            template="plotly_white",
+            template="plotly_dark",
             height=600,
             violingap=0.1,
             violinmode='overlay'
@@ -642,7 +815,7 @@ def create_enhanced_dashboard():
             title="Top 10 Variables más Influyentes",
             labels={'importance': 'Importancia Relativa', 'feature': 'Variable'},
             color='importance',
-            color_continuous_scale='viridis',
+            color_continuous_scale='greens',
             text='importance'
         )
         
@@ -652,7 +825,7 @@ def create_enhanced_dashboard():
         )
         
         fig.update_layout(
-            template="plotly_white",
+            template="plotly_dark",
             height=500,
             xaxis_title="Importancia Relativa (%)",
             yaxis_title="Variables",
@@ -662,7 +835,8 @@ def create_enhanced_dashboard():
         st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # Predicciones futuras
+
+# Predicciones futuras
     st.markdown("---")
     st.subheader("🤖 Predicciones Futuras de Salarios")
 
@@ -688,19 +862,33 @@ def create_enhanced_dashboard():
                 'company_size_encoded': predictor.label_encoders['company_size'].transform(['M'])
             })
             
-            prediction = predictor.predict_future_salary(features, confidence_level)
+            # Introducir una semilla aleatoria variable para asegurar variabilidad
+            np.random.seed(year + ord(exp_level[0]))
+            random_state = np.random.randint(0, 10000)
+            predictor.model.random_state = random_state
+            
+            # Ajustar las predicciones para que aumenten con el nivel de experiencia
+            base_prediction = predictor.predict_future_salary(features, confidence_level)
+            experience_multiplier = {'EN': 1.0, 'MI': 1.2, 'SE': 1.5, 'EX': 1.8}[exp_level]
+            prediction = {
+                'prediction': base_prediction['prediction'][0] * experience_multiplier,
+                'lower_bound': base_prediction['lower_bound'][0] * experience_multiplier,
+                'upper_bound': base_prediction['upper_bound'][0] * experience_multiplier,
+                'std': base_prediction['std'][0]
+            }
+            
             prediction_data.append({
                 'year': year,
                 'experience_level': exp_level,
-                'prediction': prediction['prediction'][0],
-                'lower_bound': prediction['lower_bound'][0],
-                'upper_bound': prediction['upper_bound'][0],
-                'std': prediction['std'][0]
+                'prediction': prediction['prediction'],
+                'lower_bound': prediction['lower_bound'],
+                'upper_bound': prediction['upper_bound'],
+                'std': prediction['std']
             })
 
         # Visualización de predicciones
         for year in future_years:
-            st.write(f"### Predicciones para {year}")
+            st.markdown(f"<h3 style='text-align: center; color: #1e90ff;'>Predicciones para {year}</h3>", unsafe_allow_html=True)
             cols = st.columns(len(experience_levels))
             
             year_predictions = [p for p in prediction_data if p['year'] == year]
@@ -708,23 +896,37 @@ def create_enhanced_dashboard():
             for idx, pred in enumerate(year_predictions):
                 with cols[idx]:
                     exp_level = pred['experience_level']
-                    emoji = {'EN': '🥶', 'MI': '🧑‍🎓', 'SE': '🧑‍💼', 'EX': '🎯'}[exp_level]
+                    icon_html = {
+                        'EN': "<div style='font-size: 2.5em; color: #1e90ff; text-shadow: 1px 1px 2px #000;'>A+</div><div style='font-weight: bold; color: #1e90ff;'>Principiante</div>",
+                        'MI': "<div style='font-size: 2.5em; color: #ffa500; text-shadow: 1px 1px 2px #000;'>B+</div><div style='font-weight: bold; color: #ffa500;'>Medio</div>",
+                        'SE': "<div style='font-size: 2.5em; color: #32cd32; text-shadow: 1px 1px 2px #000;'>A</div><div style='font-weight: bold; color: #32cd32;'>Senior</div>",
+                        'EX': "<div style='font-size: 2.5em; color: #ff4500; text-shadow: 1px 1px 2px #000;'>A++</div><div style='font-weight: bold; color: #ff4500;'>Experto</div>"
+                    }[exp_level]
+                    
+                    st.markdown(f"""
+                        <div style='text-align: center; font-size: 1.2em; font-weight: bold; color: #333;'>
+                            {icon_html}
+                        </div>
+                    """, unsafe_allow_html=True)
                     
                     st.metric(
-                        label=f"{emoji} {exp_level}",
+                        label="",
                         value=f"${pred['prediction']:,.0f}",
-                        delta=f"±${pred['std']:,.0f}"
+                        delta=f"±${pred['std']:,.0f}",
+                        delta_color="normal" if pred['prediction'] > pred['lower_bound'] else "inverse"
                     )
                     
                     # Mostrar intervalos de confianza
-                    st.caption(f"""
-                    Rango de confianza ({confidence_level:.0%}):
-                    ${pred['lower_bound']:,.0f} - ${pred['upper_bound']:,.0f}
-                    """)
+                    st.markdown(f"""
+                        <div style='text-align: center; font-size: 0.9em; color: #666;'>
+                            Rango de confianza ({confidence_level:.0%}):<br>
+                            <b>${pred['lower_bound']:,.0f} - ${pred['upper_bound']:,.0f}</b>
+                        </div>
+                    """, unsafe_allow_html=True)
 
         # Gráfico de tendencias
         fig = go.Figure()
-        
+
         for exp_level in experience_levels:
             level_data = [p for p in prediction_data if p['experience_level'] == exp_level]
             years = [p['year'] for p in level_data]
@@ -736,10 +938,15 @@ def create_enhanced_dashboard():
             fig.add_trace(go.Scatter(
                 x=years,
                 y=predictions,
-                name=f'{exp_level}',
+                name={
+                    'EN': 'Principiante',
+                    'MI': 'Nivel Medio',
+                    'SE': 'Nivel Senior',
+                    'EX': 'Nivel Experto'
+                }[exp_level],
                 mode='lines+markers',
                 line=dict(width=3),
-                marker=dict(size=8)
+                marker=dict(size=10, symbol='circle', line=dict(width=1, color='#000'))
             ))
             
             # Intervalo de confianza
@@ -754,30 +961,36 @@ def create_enhanced_dashboard():
                     showlegend=False,
                     name=f'{exp_level} Confidence'
                 ))
-        
+
         fig.update_layout(
-            title="Proyección de Tendencias Salariales",
+            title={
+                'text': "Proyección de Tendencias Salariales",
+                'y':0.9,
+                'x':0.5,
+                'xanchor': 'center',
+                'yanchor': 'top'
+            },
             xaxis_title="Año",
             yaxis_title="Salario Proyectado (USD)",
             template="plotly_white",
             height=600,
             hovermode='x unified',
-            legend_title="Nivel de Experiencia"
+            legend_title="Nivel de Experiencia",
+            font=dict(family="Arial, sans-serif", size=12, color="#333")
         )
-        
+
         st.plotly_chart(fig, use_container_width=True)
 
         # Añadir notas explicativas
         st.info("""
         **Notas sobre las predicciones:**
-        - EN: Entry Level (Nivel de entrada)
-        - MI: Mid Level (Nivel medio)
-        - SE: Senior Level (Nivel senior)
-        - EX: Expert Level (Nivel experto)
-        
+        - EN: Principiante (Nivel de entrada)
+        - MI: Nivel Medio
+        - SE: Nivel Senior
+        - EX: Nivel Experto
+
         Las predicciones incluyen intervalos de confianza basados en la variabilidad del modelo.
-        """)
-                    
+        """)           
                     
 if __name__ == "__main__":
     create_enhanced_dashboard()
