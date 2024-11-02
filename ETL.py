@@ -3,7 +3,7 @@ import psycopg2
 from psycopg2 import sql
 
 # Cargar los datos
-file_path = './datos.csv'  # Cambia la ruta según corresponda
+file_path = './datos.csv'
 data = pd.read_csv(file_path)
 
 # Configuración de la conexión a la base de datos PostgreSQL
