@@ -110,7 +110,7 @@ class SalaryPredictor:
         
         # Preparar features finales
         feature_cols = [f'{col}_encoded' for col in categorical_cols] + [f'{col}_scaled' for col in numerical_cols]
-        X = self.df[feature_cols]
+        x = self.df[feature_cols]
         y = self.df['salary_in_usd']
         
         # Guardar información de features
@@ -121,15 +121,15 @@ class SalaryPredictor:
             'feature_cols': feature_cols
         }
         
-        return train_test_split(X, y, test_size=0.2, random_state=42, stratify=None)
+        return train_test_split(x, y, test_size=0.2, random_state=42, stratify=None)
 
-    def train_model(self, X_train, y_train, X_test, y_test):
+    def train_model(self, X_train, y_train, X_test, y_test, **kwargs):
         """Entrena el modelo y calcula métricas detalladas."""
         self.model = RandomForestRegressor(
-            n_estimators=200,
-            max_depth=15,
-            min_samples_split=5,
-            min_samples_leaf=2,
+            n_estimators=kwargs.get('n_estimators', 200),
+            max_depth=kwargs.get('max_depth', 15),
+            min_samples_split=kwargs.get('min_samples_split', 5),
+            min_samples_leaf=kwargs.get('min_samples_leaf', 2),
             random_state=42,
             n_jobs=-1
         )
@@ -277,7 +277,7 @@ def create_enhanced_dashboard():
         
         /* Contenedores de componentes */
         .component-container {
-            background-color: white;
+            background-color: #2a5298;
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -325,7 +325,7 @@ def create_enhanced_dashboard():
         
         /* Contenedores de gráficos */
         .chart-container {
-            background-color: white;
+            background: linear-gradient(120deg, #1e3c72 0%, #2a5298 100%);
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -420,7 +420,7 @@ def create_enhanced_dashboard():
     with st.sidebar:
         st.markdown("""
             <div class='component-container'>
-                <h2>🏯 Panel de Control</h2>
+                <h2>Panel de Control
             </div>
         """, unsafe_allow_html=True)
         
@@ -436,9 +436,9 @@ def create_enhanced_dashboard():
         
         # Filtros temporales
         st.subheader("⏳ Rango Temporal")
-        years_range = st.slider("Años de análisis", 2022, 2024, (2022, 2024),
+        years_range = st.slider("Años de análisis", 2020, 2024, (2020, 2024),
                               help="Selecciona el rango de años para el análisis")
-        forecast_years = st.slider("Años de predicción", 2025, 2030, (2025, 2027),
+        forecast_years = st.slider("Años de predicción", 2025, 2027, (2025, 2027),
                                  help="Selecciona el rango de años para la predicción")
         
         # Configuración de visualización
@@ -466,7 +466,12 @@ def create_enhanced_dashboard():
     # Preparación y entrenamiento
     with st.spinner('🔄 Preparando y entrenando el modelo...'):
         X_train, X_test, y_train, y_test = predictor.prepare_features()
-        y_pred = predictor.train_model(X_train, y_train, X_test, y_test)
+        y_pred = predictor.train_model(
+            X_train, y_train, X_test, y_test,
+            n_estimators=n_estimators,
+            max_depth=max_depth,
+            min_samples_split=min_samples_split
+        )
 
     # Dashboard principal
     col1, col2, col3 = st.columns(3)
