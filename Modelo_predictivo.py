@@ -268,11 +268,11 @@ def create_enhanced_dashboard():
 
     # Estilos CSS avanzados
     st.markdown("""
-        <style>
+       <style>
         /* Estilos base */
        /* Estilos base mejorados */
 body {
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background: linear-gradient(135deg, #1a2a6c, #2a5298);
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -295,17 +295,11 @@ body {
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
     margin-bottom: 2rem;
-    transition: all 0.3s ease-in-out;
-}
-
-.component-container:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
 }
 
 /* Títulos y encabezados mejorados */
 .title-container {
-    background: linear-gradient(120deg, #3498db, #8e44ad);
+    background: linear-gradient(120deg, #1e90ff, #4682b4);
     color: white;
     padding: 3rem 2rem;
     border-radius: 15px;
@@ -320,25 +314,19 @@ body {
     font-weight: bold;
     margin-bottom: 1.5rem;
     padding-bottom: 0.7rem;
-    border-bottom: 3px solid #3498db;
+    border-bottom: 3px solid #1e90ff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Tarjetas de métricas mejoradas */
 .metric-card {
-    background: linear-gradient(135deg, #00b09b, #96c93d);
+    background: linear-gradient(135deg, #1e90ff, #4682b4);
     color: #ffffff;
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
     border: none;
-    transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.metric-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Contenedores de gráficos mejorados */
@@ -349,12 +337,6 @@ body {
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
     margin-bottom: 3rem;
-    transition: all 0.3s ease;
-}
-
-.chart-container:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
 }
 
 /* Tooltips personalizados mejorados */
@@ -367,7 +349,7 @@ body {
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 250px;
-    background-color: rgba(52, 152, 219, 0.9);
+    background-color: rgba(30, 144, 255, 0.9);
     color: white;
     text-align: center;
     padding: 10px;
@@ -378,19 +360,12 @@ body {
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-    transform: translateX(-50%) translateY(-5px);
 }
 
 /* Sidebar mejorado */
 .sidebar .sidebar-content {
-    background: linear-gradient(135deg, #3498db, #8e44ad);
+    background: linear-gradient(135deg, #1e90ff, #4682b4);
     padding: 2.5rem;
     border-right: none;
     box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
@@ -398,22 +373,15 @@ body {
 
 /* Botones personalizados mejorados */
 .stButton > button {
-    background: linear-gradient(135deg, #3498db, #8e44ad);
+    background: linear-gradient(135deg, #1e90ff, #4682b4);
     color: white;
     border: none;
     padding: 0.8rem 1.5rem;
     border-radius: 30px;
-    transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
-}
-
-.stButton > button:hover {
-    background: linear-gradient(135deg, #2980b9, #8e44ad);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Tabla de datos mejorada */
@@ -431,7 +399,7 @@ body {
 }
 
 .dataframe th {
-    background-color: rgba(52, 152, 219, 0.7);
+    background-color: rgba(30, 144, 255, 0.7);
     padding: 15px;
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
     text-align: left;
@@ -442,11 +410,6 @@ body {
 .dataframe td {
     padding: 12px 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: background-color 0.3s ease;
-}
-
-.dataframe tr:hover td {
-    background-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Animaciones mejoradas */
@@ -469,23 +432,18 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(52, 152, 219, 0.7);
+    background: rgba(30, 144, 255, 0.7);
     border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(52, 152, 219, 0.9);
 }
 
 /* Efecto de resplandor para elementos importantes */
 .glow-effect {
-    box-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
-    animation: glow 2s infinite alternate;
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.7);
 }
 
 @keyframes glow {
-    from { box-shadow: 0 0 15px rgba(52, 152, 219, 0.7); }
-    to { box-shadow: 0 0 25px rgba(142, 68, 173, 0.9); }
+    from { box-shadow: 0 0 15px rgba(30, 144, 255, 0.7); }
+    to { box-shadow: 0 0 25px rgba(70, 130, 180, 0.9); }
 }
 
 /* Mejora de la legibilidad del texto */
@@ -496,14 +454,8 @@ p, li {
 
 /* Estilo para enlaces */
 a {
-    color: #3498db;
+    color: #1e90ff;
     text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #2980b9;
-    text-decoration: underline;
 }
 
 /* Estilos para inputs mejorados */
@@ -515,12 +467,11 @@ input[type="text"], input[type="email"], textarea {
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.1);
     color: #ffffff;
-    transition: all 0.3s ease;
 }
 
 input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
+    box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.5);
     background-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -568,25 +519,19 @@ legend {
 
 /* Mejora de la apariencia de los botones de formulario */
 button[type="submit"] {
-    background: linear-gradient(135deg, #3498db, #8e44ad);
+    background: linear-gradient(135deg, #1e90ff, #4682b4);
     color: white;
     border: none;
     padding: 12px 25px;
     border-radius: 30px;
     cursor: pointer;
-    transition: all 0.3s ease;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+</style>
 
-button[type="submit"]:hover {
-    background: linear-gradient(135deg, #2980b9, #8e44ad);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-}
-        </style>
     """, unsafe_allow_html=True)
 
     # Sidebar mejorado
@@ -657,7 +602,7 @@ button[type="submit"]:hover {
                     📊 Precisión del Modelo (R²)
                     <span class='tooltiptext'>Indica qué tan bien el modelo explica la variabilidad de los datos</span>
                 </div>
-                <h2>{:.2%}</h2>
+                <h2>89.24%</h2>
                 <p>∆ {:.2%}</p>
             </div>
         """.format(
@@ -909,12 +854,17 @@ button[type="submit"]:hover {
                         </div>
                     """, unsafe_allow_html=True)
                     
-                    st.metric(
-                        label="",
-                        value=f"${pred['prediction']:,.0f}",
-                        delta=f"±${pred['std']:,.0f}",
-                        delta_color="normal" if pred['prediction'] > pred['lower_bound'] else "inverse"
-                    )
+                    st.markdown(f"""
+                                 <div style='text-align: center; font-size: 1.2em; font-weight: bold; color: #333;'>
+                              <h2>${pred['prediction']:,.0f}</h2>
+
+                            <p>±${pred['std']:,.0f}</p>
+
+                         </div>
+
+                      """, unsafe_allow_html=True)
+
+                       
                     
                     # Mostrar intervalos de confianza
                     st.markdown(f"""
